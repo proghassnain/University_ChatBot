@@ -124,3 +124,8 @@ if st.button("Get Insights"):
             st.subheader("🎯 Recommendation:")
             st.write(response.text)
 
+
+st.write("Developed By Hasnain Asif Khan")
+st.write("Tech : Gemini API, Streamlit, Reddit API")
+
+
