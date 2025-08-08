@@ -29,8 +29,35 @@ reddit = praw.Reddit(
 # ======================
 # Function to get reviews from Reddit
 # ======================
-def fetch_university_reviews(university_name, limit=10):
-    subreddit_list = ["islamabad","pakistan", "college", "AskAcademia", university_name.replace(" ", "")]
+def fetch_university_reviews(university_name, limit=5):
+    subreddit_list = [
+        "Harvard", "Stanford", "MIT", "Berkeley", "UCLA", "NYU", "Oxford", "Cambridge",
+        "Yale", "Princeton", "Columbia", "UChicago", "Duke", "Cornell", "Michigan", "Penn",
+        "Toronto", "McGill", "MelbourneUni", "ImperialCollege", "ETHZurich", "UCL", "KCL",
+        "Monash", "ANU", "UMich", "USyd", "HKUST", "NTU", "NUS", "SeoulNationalUniversity",
+        "NUST", "LUMS", "IBA", "PU", "FASTNUCES", "GIKI", "UETLahore", "UOL", "UCP", "IBAkarachi",
+        "PUCIT", "QAU", "SZABIST", "AirUniversity", "KIU", "CUST", "BAHRIAUniversity",
+        "UETPeshawar", "UAF", "SZABISTKarachi", "IUB", "KUST", "UoS", "UoP", "UoLahore", "NEDUniversity",
+        "islamabad", "pakistan", "PakistaniStudents", "educationpakistan",
+        "college", "AskAcademia", "university", "InternationalStudents",
+        "GradSchool", "ApplyingToCollege", "StudentLife", "Scholarships",
+        "StudyAbroad", "HigherEducation", "AcademicPhilosophy",
+        "EngineeringStudents", "LawSchool", "MedSchool", "BusinessSchool",
+        university_name.replace(" ", "")
+    ]
+
+    reviews = []
+    for sub in subreddit_list:
+        try:
+            subreddit = reddit.subreddit(sub)
+            for post in subreddit.search(university_name, sort="relevance", limit=limit):
+                content = post.title + " " + (post.selftext or "")
+                reviews.append(content)
+        except Exception as e:
+            print(f"Skipping subreddit {sub}: {e}")
+
+    return reviews
+
     reviews = []
 
     for sub in subreddit_list:
@@ -46,7 +73,7 @@ def fetch_university_reviews(university_name, limit=10):
 # Streamlit UI
 # ======================
 st.set_page_config(page_title="University Comparison Bot", page_icon="🎓")
-st.title("🎓 University Comparison Bot (Pakistan)")
+st.title("🎓 University Comparison Bot")
 st.write("Compare Universities based on **live Reddit student reviews**!")
 
 # Input for first university
