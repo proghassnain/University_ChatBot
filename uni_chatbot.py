@@ -30,7 +30,7 @@ reddit = praw.Reddit(
 # Function to get reviews from Reddit
 # ======================
 def fetch_university_reviews(university_name, limit=10):
-    subreddit_list = ["pakistan", "college", "AskAcademia", university_name.replace(" ", "")]
+    subreddit_list = ["islamabad","pakistan", "college", "AskAcademia", university_name.replace(" ", "")]
     reviews = []
 
     for sub in subreddit_list:
@@ -96,3 +96,4 @@ if st.button("Get Insights"):
             response = model.generate_content(prompt)
             st.subheader("🎯 Recommendation:")
             st.write(response.text)
+
